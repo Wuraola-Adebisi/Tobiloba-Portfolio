@@ -1,3 +1,5 @@
+import Hero from "../components/Hero";
+
 export default function SoftwareLayout() {
-  return <div>Software engineer section — content coming</div>;
+  return <Hero />;
 }

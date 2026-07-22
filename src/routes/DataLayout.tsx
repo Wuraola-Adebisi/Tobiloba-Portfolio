@@ -1,3 +1,5 @@
+import Hero from "../components/Hero";
+
 export default function DataLayout() {
-  return <div>Data engineer section — content coming</div>;
+  return <Hero />;
 }
