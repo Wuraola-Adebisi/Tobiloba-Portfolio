@@ -1,75 +1,54 @@
-# React + TypeScript + Vite
+# Tobiloba Portfolio
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A two-in-one portfolio site for Tobiloba Adebisi — software engineer and AWS-certified data engineer — with routed sections for each role, backed by a headless CMS.
 
-Currently, two official plugins are available:
+Live at [tobiloba.me](https://tobiloba.me)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Overview
 
-## React Compiler
+The site is split into two routed experiences from a single codebase:
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- `/software/` — software engineering projects, experience, and skills
+- `/data/` — data engineering projects, experience, and skills
 
-## Expanding the ESLint configuration
+Both sides pull from one shared Sanity dataset, with content tagged by role so shared skills (AWS, MongoDB, Docker, etc.) and dual-framed work experience (the same job described differently depending on audience) don't need to be duplicated in code.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Tech stack
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- **Vite + React + TypeScript** — build tooling and app framework
+- **Tailwind CSS v4** — styling, theme tokens defined in `src/index.css` via `@theme`
+- **Sanity** — headless CMS for projects, experience, skills, and site settings
+- **React Router** — client-side routing between the software and data sections
+- **GitHub Pages** — hosting, served from the custom domain `tobiloba.me`
+- **GitHub Actions** — CI/CD, auto-deploys on every push to `main`
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+The Sanity Studio lives in a separate sibling project, `tobiloba-portfolio-studio`, with its own repo and its own `schemaTypes/` folder (`project`, `experience`, `skill`, `siteSettings`).
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Content model
 
-```
+All content is managed in Sanity and filtered by a `role` field (`"software"` | `"data"`), or a `role` array for entries that apply to both sides.
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+| Type | Fields |
+|---|---|
+| `project` | title, slug, coverImage, liveUrl, repoUrl, role, techStack, summary, order |
+| `experience` | company, roles (array), startDate, endDate, description, techStack |
+| `skill` | name, category, role (array) |
+| `siteSettings` | name, tagline, resumeUrl, contactEmail, certifications |
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Deployment
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+Deployment is fully automated. Any push to `main` triggers a GitHub Actions workflow (`.github/workflows/deploy.yml`) that builds the app and publishes it to GitHub Pages. No manual build or upload steps are needed.
 
-```
+GitHub Pages is configured to deploy from **GitHub Actions** (not a branch), under the repo's Settings → Pages.
+
+## Roadmap
+
+- [x] Project scaffold, routing skeleton, Tailwind v4 config
+- [x] Sanity schema and studio setup
+- [x] Content entry (projects, experience, skills, site settings)
+- [x] Design system (color, type, layout direction)
+- [x] CI/CD pipeline
+- [ ] Software section — full component build
+- [ ] Data section — structural build
+- [ ] Resume download/view button
+- [ ] Polish, responsive pass, and final deploy
