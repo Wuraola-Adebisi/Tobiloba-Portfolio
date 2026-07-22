@@ -12,31 +12,31 @@ export default function Nav() {
   const settingsRef = useClickOutside<HTMLDivElement>(() => setSettingsOpen(false));
 
   return (
-    <nav className="flex items-center justify-between px-9 py-3.5 border-b border-border-light dark:border-border-dark relative">
+    <nav className="grid grid-cols-[1fr_auto_1fr] items-center px-9 py-3.5 border-b border-border-light dark:border-border-dark">
       <div className="font-hero text-2xl font-extrabold tracking-tight">TA</div>
 
-      <div className="flex bg-card dark:bg-card-dark rounded-full p-1 relative">
+      <div className="relative flex bg-surface dark:bg-surface-dark border border-border-light dark:border-border-dark rounded-full p-1">
         <div
-          className="absolute top-1 bottom-1 w-[calc(50%-4px)] rounded-full bg-accent transition-transform duration-300"
+          className="absolute top-1 bottom-1 left-1 w-[calc(50%-4px)] rounded-full bg-accent-tint dark:bg-accent-tint-dark border border-accent-border dark:border-accent-border-dark transition-transform duration-300 ease-out"
           style={{
             transform: route === "data" ? "translateX(100%)" : "translateX(0)",
           }}
         />
         <button
           onClick={() => setRoute("software")}
-          className={`relative z-10 px-6 py-2.5 text-sm font-semibold rounded-full transition-colors ${route === "software" ? "text-white" : "text-gray-500 dark:text-gray-400"}`}
+          className={`relative z-10 flex-1 px-6 py-2 font-mono text-[11px] font-semibold uppercase tracking-wider rounded-full transition-colors ${route === "software" ? "text-accent" : "text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300"}`}
         >
           Software
         </button>
         <button
           onClick={() => setRoute("data")}
-          className={`relative z-10 px-6 py-2.5 text-sm font-semibold rounded-full transition-colors ${route === "data" ? "text-white" : "text-gray-500 dark:text-gray-400"}`}
+          className={`relative z-10 flex-1 px-6 py-2 font-mono text-[11px] font-semibold uppercase tracking-wider rounded-full transition-colors ${route === "data" ? "text-accent" : "text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300"}`}
         >
           Data
         </button>
       </div>
 
-      <div className="flex items-center gap-7">
+      <div className="flex items-center gap-7 justify-self-end">
         <a
           href="#work"
           className="text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"

@@ -1,10 +1,17 @@
 export type Role = "software" | "data";
 
+export interface SanityImage {
+  asset: {
+    _ref: string;
+    _type: "reference";
+  };
+}
+
 export interface Project {
   _id: string;
   title: string;
   slug: string;
-  coverImage?: string;
+  coverImage?: SanityImage;
   liveUrl?: string;
   repoUrl?: string;
   role: Role;
