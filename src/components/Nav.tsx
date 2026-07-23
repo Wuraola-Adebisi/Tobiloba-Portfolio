@@ -10,17 +10,21 @@ import {
 import { useTheme } from "../hooks/useTheme";
 import { useRoute } from "../hooks/useRoute";
 import { useClickOutside } from "../hooks/useClickOutside";
+import { useSiteSettings } from "../hooks/useSiteSettings";
 
 export default function Nav() {
   const { dark, setDark, hue, setHue, accentHues } = useTheme();
   const { route, setRoute } = useRoute();
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
   const settingsRef = useClickOutside<HTMLDivElement>(() =>
     setSettingsOpen(false),
   );
-
+  const { settings } = useSiteSettings();
+  const resumeUrl =
+    route === "data"
+      ? settings?.dataResume?.asset?.url
+      : settings?.softwareResume?.asset?.url;
   return (
     <nav className="sticky top-0 z-30 border-b border-border-light dark:border-border-dark bg-surface/90 dark:bg-surface-dark/90 backdrop-blur-md">
       <div className="flex items-center justify-between px-5 md:px-9 py-3.5">
@@ -66,8 +70,10 @@ export default function Nav() {
             Work
           </a>
           <a
-            href="#resume"
-            className="text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"
+            href={resumeUrl}
+            target="_blank"
+            rel="noreferrer"
+            className="text-sm font-semibold text-white bg-accent px-4 py-2 rounded-full hover:opacity-90 transition-opacity"
           >
             Resume
           </a>
@@ -144,9 +150,11 @@ export default function Nav() {
             Work
           </a>
           <a
-            href="#resume"
+            href={resumeUrl}
+            target="_blank"
+            rel="noreferrer"
             onClick={() => setMobileMenuOpen(false)}
-            className="text-sm font-medium text-gray-700 dark:text-gray-300"
+            className="text-sm font-semibold text-white bg-accent px-4 py-2.5 rounded-full text-center"
           >
             Resume
           </a>
