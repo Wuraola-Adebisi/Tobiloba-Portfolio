@@ -1,7 +1,9 @@
+import { useRef, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faArrowUpRightFromSquare,
   faCodeBranch,
+  faPlay,
 } from "@fortawesome/free-solid-svg-icons";
 import type { Project } from "../types";
 import { urlFor } from "../data/imageUrl";
@@ -12,32 +14,83 @@ interface ProjectCardProps {
 }
 
 export default function ProjectCard({ project, emphasized }: ProjectCardProps) {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const hoverTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const [videoActive, setVideoActive] = useState(false);
+
   const imageSrc = project.coverImage
     ? urlFor(project.coverImage)
-        .width(emphasized ? 900 : 700)
-        .height(emphasized ? 560 : 440)
-        .fit("crop")
+        .width(emphasized ? 1000 : 800)
+        .fit("max")
         .auto("format")
         .url()
     : null;
 
-  const imageHeight = emphasized ? "h-72" : "h-36";
+  const videoUrl = project.showcaseVideo?.asset?.url;
+
+  function handleEnter() {
+    if (!videoUrl) return;
+    hoverTimer.current = setTimeout(() => {
+      setVideoActive(true);
+      videoRef.current?.play();
+    }, 350);
+  }
+
+  function handleLeave() {
+    if (!videoUrl) return;
+    if (hoverTimer.current) clearTimeout(hoverTimer.current);
+    setVideoActive(false);
+    videoRef.current?.pause();
+    if (videoRef.current) videoRef.current.currentTime = 0;
+  }
 
   return (
-    <article className="group relative flex flex-col overflow-hidden rounded-2xl border border-dashed border-border-light dark:border-border-dark hover:border-solid hover:border-accent transition-colors duration-300">
-      <div
-        className={`relative overflow-hidden bg-card dark:bg-card-dark ${imageHeight}`}
-      >
+    <article
+      onMouseEnter={handleEnter}
+      onMouseLeave={handleLeave}
+      className="group relative flex flex-col overflow-hidden rounded-2xl border border-dashed border-border-light dark:border-border-dark hover:border-solid hover:border-accent transition-colors duration-300"
+    >
+      <div className="relative aspect-video overflow-hidden bg-card dark:bg-card-dark flex items-center justify-center">
         {imageSrc ? (
           <img
             src={imageSrc}
             alt={project.title}
-            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+            className={`w-full h-full object-cover transition-opacity duration-500 ${
+              videoActive ? "opacity-0" : "opacity-100"
+            }`}
             loading="lazy"
           />
         ) : (
-          <div className="w-full h-full flex items-center justify-center font-mono text-[10px] uppercase tracking-wide text-gray-400 dark:text-gray-600">
+          <div className="font-mono text-[10px] uppercase tracking-wide text-gray-400 dark:text-gray-600">
             no preview
+          </div>
+        )}
+
+        {videoUrl && (
+          <video
+            ref={videoRef}
+            src={videoUrl}
+            poster={imageSrc ?? undefined}
+            preload="metadata"
+            muted
+            loop
+            playsInline
+            className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${
+              videoActive ? "opacity-100" : "opacity-0"
+            }`}
+          />
+        )}
+
+        {videoUrl && (
+          <div
+            className={`absolute bottom-3 right-3 w-8 h-8 rounded-lg bg-black/60 backdrop-blur-sm flex items-center justify-center transition-opacity duration-300 ${
+              videoActive ? "opacity-0" : "opacity-100"
+            }`}
+          >
+            <FontAwesomeIcon
+              icon={faPlay}
+              className="text-white text-[10px] ml-0.5"
+            />
           </div>
         )}
       </div>
@@ -66,7 +119,7 @@ export default function ProjectCard({ project, emphasized }: ProjectCardProps) {
           {project.techStack.slice(0, emphasized ? 5 : 3).map((tech) => (
             <span
               key={tech}
-              className="font-mono text-[10px] uppercase tracking-wide px-2 py-1 rounded-full border border-accent-border dark:border-accent-border-dark text-accent"
+              className="font-mono text-[10px] uppercase tracking-wide px-2 py-1 rounded-lg border border-accent-border dark:border-accent-border-dark text-accent"
             >
               {tech}
             </span>

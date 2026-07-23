@@ -5,6 +5,11 @@ import { siteSettingsQuery } from "../data/queries";
 interface SiteSettings {
   name?: string;
   tagline?: string;
+  portrait?: { asset?: { url?: string } };
+  softwareRoleLabel?: string;
+  softwareHeroDescription?: string;
+  dataRoleLabel?: string;
+  dataHeroDescription?: string;
   softwareResume?: { asset?: { url?: string } };
   dataResume?: { asset?: { url?: string } };
   contactEmail?: string;
@@ -18,7 +23,12 @@ export function useSiteSettings() {
   useEffect(() => {
     sanityClient
       .fetch<SiteSettings>(
-        `${siteSettingsQuery}{..., softwareResume{asset->{url}}, dataResume{asset->{url}}}`
+        `${siteSettingsQuery}{
+          ...,
+          portrait{asset->{url}},
+          softwareResume{asset->{url}},
+          dataResume{asset->{url}}
+        }`,
       )
       .then(setSettings)
       .finally(() => setLoading(false));

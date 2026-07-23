@@ -5,23 +5,23 @@
   --font-hero: "Big Shoulders Display", sans-serif;
   --font-mono: "Space Mono", monospace;
 
-  --color-navy: #111C33;
-  --color-navy-dark: #0B1424;
+  --color-navy: #111c33;
+  --color-navy-dark: #0b1424;
   --color-accent: hsl(var(--accent-hue) 90% 58%);
   --color-accent-dark: hsl(var(--accent-hue) 85% 68%);
 
-  --color-surface: #F4F2ED;
-  --color-surface-dark: #0D0D10;
-  --color-card: #EBE8E1;
-  --color-card-dark: #18181C;
+  --color-surface: #f4f2ed;
+  --color-surface-dark: #0d0d10;
+  --color-card: #ebe8e1;
+  --color-card-dark: #18181c;
 
   --color-accent-tint: hsl(var(--accent-hue) 70% 94%);
   --color-accent-tint-dark: hsl(var(--accent-hue) 40% 14%);
   --color-accent-border: hsl(var(--accent-hue) 60% 82%);
   --color-accent-border-dark: hsl(var(--accent-hue) 40% 28%);
 
-  --color-border-light: #DCD8CE;
-  --color-border-dark: #35353D;
+  --color-border-light: #dcd8ce;
+  --color-border-dark: #35353d;
 
   --breakpoint-3xl: 1920px;
   --breakpoint-4xl: 2560px;
@@ -29,6 +29,7 @@
 
 :root {
   --accent-hue: 217deg;
+  scroll-behavior: smooth;
 }
 
 .route-data {

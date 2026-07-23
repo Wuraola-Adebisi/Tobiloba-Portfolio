@@ -12,6 +12,7 @@ export interface Project {
   title: string;
   slug: string;
   coverImage?: string;
+  showcaseVideo?: { asset?: { url?: string } };
   liveUrl?: string;
   repoUrl?: string;
   role: Role;

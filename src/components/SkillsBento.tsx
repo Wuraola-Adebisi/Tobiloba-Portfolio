@@ -1,5 +1,6 @@
 import { useRoute } from "../hooks/useRoute";
 import { useSkills } from "../hooks/useSkills";
+import Skeleton from "./Skeleton";
 
 export default function SkillsBento() {
   const { route } = useRoute();
@@ -24,10 +25,7 @@ export default function SkillsBento() {
       {loading && (
         <div className="grid grid-cols-1 md:grid-cols-4 gap-5 auto-rows-[8rem]">
           {[0, 1, 2, 3, 4, 5].map((i) => (
-            <div
-              key={i}
-              className="rounded-2xl border border-dashed border-border-light dark:border-border-dark bg-card dark:bg-card-dark animate-pulse"
-            />
+            <Skeleton key={i} />
           ))}
         </div>
       )}
@@ -51,24 +49,39 @@ export default function SkillsBento() {
             return (
               <div
                 key={category}
-                className={`rounded-2xl border border-dashed border-border-light dark:border-border-dark hover:border-solid hover:border-accent transition-colors duration-300 p-5 flex flex-col bg-card dark:bg-card-dark ${span}`}
+                className={`rounded-2xl border-2 border-dashed transition-colors duration-300 p-5 flex flex-col ${span} ${
+                  isPrimary
+                    ? "bg-accent border-accent text-white"
+                    : "bg-card dark:bg-card-dark border-border-light dark:border-border-dark hover:border-accent"
+                }`}
               >
                 <h3
-                  className={`font-semibold tracking-tight text-gray-900 dark:text-white mb-4 ${
-                    isPrimary ? "text-lg" : "text-sm"
+                  className={`font-semibold tracking-tight mb-4 ${
+                    isPrimary
+                      ? "text-lg text-white"
+                      : "text-sm text-gray-900 dark:text-white"
                   }`}
                 >
                   {category}
                 </h3>
                 <div className="flex flex-wrap gap-2 content-start">
-                  {names.map((name) => (
-                    <span
-                      key={name}
-                      className="font-mono text-[10px] uppercase tracking-wide px-2.5 py-1.5 rounded-full border border-accent-border dark:border-accent-border-dark text-accent"
-                    >
-                      {name}
-                    </span>
-                  ))}
+                  {names.map((name) =>
+                    isPrimary ? (
+                      <span
+                        key={name}
+                        className="font-mono text-[10px] uppercase tracking-wide px-2.5 py-1.5 rounded-lg bg-white/15 border border-white/30 text-white"
+                      >
+                        {name}
+                      </span>
+                    ) : (
+                      <span
+                        key={name}
+                        className="font-mono text-[10px] uppercase tracking-wide px-2.5 py-1.5 rounded-lg border border-accent-border dark:border-accent-border-dark text-accent"
+                      >
+                        {name}
+                      </span>
+                    ),
+                  )}
                 </div>
               </div>
             );

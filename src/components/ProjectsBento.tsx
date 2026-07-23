@@ -1,11 +1,11 @@
 import { useRoute } from "../hooks/useRoute";
 import { useProjects } from "../hooks/useProjects";
 import ProjectCard from "./ProjectCard";
+import Skeleton from "./Skeleton";
 
 export default function ProjectsBento() {
   const { route } = useRoute();
   const { projects, loading, error } = useProjects(route);
-
   const rows: [
     (typeof projects)[number],
     (typeof projects)[number] | undefined,
@@ -15,7 +15,7 @@ export default function ProjectsBento() {
   }
 
   return (
-    <section id="work" className="max-w-[1440px] mx-auto px-9 py-20">
+    <section id="work" className="max-w-[1440px] mx-auto px-5 md:px-9 py-20">
       <h2 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-white mb-10">
         Projects
       </h2>
@@ -23,10 +23,7 @@ export default function ProjectsBento() {
       {loading && (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           {[0, 1, 2, 3].map((i) => (
-            <div
-              key={i}
-              className="h-80 rounded-2xl border border-dashed border-border-light dark:border-border-dark bg-card dark:bg-card-dark animate-pulse"
-            />
+            <Skeleton key={i} className="h-80" />
           ))}
         </div>
       )}

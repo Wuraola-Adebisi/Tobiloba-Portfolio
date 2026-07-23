@@ -3,6 +3,7 @@ import { faArrowUpRightFromSquare } from "@fortawesome/free-solid-svg-icons";
 import { useRoute } from "../hooks/useRoute";
 import { useCertifications } from "../hooks/useCertifications";
 import { urlFor } from "../data/imageUrl";
+import Skeleton from "./Skeleton";
 
 export default function Certifications() {
   const { route } = useRoute();
@@ -11,7 +12,10 @@ export default function Certifications() {
   if (!loading && !error && certifications.length === 0) return null;
 
   return (
-    <section className="max-w-[1440px] mx-auto px-5 md:px-9 py-20">
+    <section
+      id="certifications"
+      className="max-w-[1440px] mx-auto px-5 md:px-9 py-20"
+    >
       <h2 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-white mb-10">
         Certifications
       </h2>
@@ -19,10 +23,7 @@ export default function Certifications() {
       {loading && (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           {[0, 1, 2].map((i) => (
-            <div
-              key={i}
-              className="h-64 rounded-2xl border border-dashed border-border-light dark:border-border-dark bg-card dark:bg-card-dark animate-pulse"
-            />
+            <Skeleton key={i} className="h-64" />
           ))}
         </div>
       )}
@@ -48,6 +49,7 @@ export default function Certifications() {
                   src={urlFor(cert.badgeImage).width(120).height(120).url()}
                   alt={cert.title}
                   className="w-16 h-16 object-contain mb-4"
+                  loading="lazy"
                 />
               )}
               <h3 className="text-base font-semibold tracking-tight text-gray-900 dark:text-white mb-1">
