@@ -2,27 +2,26 @@
 
 @theme {
   --font-sans: "Inter", sans-serif;
-  --font-heading: "Epilogue", sans-serif;
   --font-hero: "Big Shoulders Display", sans-serif;
   --font-mono: "Space Mono", monospace;
 
-  --color-navy: #111c33;
-  --color-navy-dark: #0b1424;
+  --color-navy: #111C33;
+  --color-navy-dark: #0B1424;
   --color-accent: hsl(var(--accent-hue) 90% 58%);
   --color-accent-dark: hsl(var(--accent-hue) 85% 68%);
 
-  --color-surface: #ffffff;
-  --color-surface-dark: #0d0d10;
-  --color-card: #fafafa;
-  --color-card-dark: #18181c;
+  --color-surface: #F4F2ED;
+  --color-surface-dark: #0D0D10;
+  --color-card: #EBE8E1;
+  --color-card-dark: #18181C;
 
-  --color-accent-tint: hsl(var(--accent-hue) 100% 97%);
+  --color-accent-tint: hsl(var(--accent-hue) 70% 94%);
   --color-accent-tint-dark: hsl(var(--accent-hue) 40% 14%);
-  --color-accent-border: hsl(var(--accent-hue) 80% 88%);
+  --color-accent-border: hsl(var(--accent-hue) 60% 82%);
   --color-accent-border-dark: hsl(var(--accent-hue) 40% 28%);
 
-  --color-border-light: #ececec;
-  --color-border-dark: #26262b;
+  --color-border-light: #DCD8CE;
+  --color-border-dark: #35353D;
 
   --breakpoint-3xl: 1920px;
   --breakpoint-4xl: 2560px;
@@ -37,10 +36,6 @@
 }
 
 @custom-variant dark (&:where(.dark, .dark *));
-
-body {
-  @apply bg-surface text-gray-900 dark:bg-surface-dark dark:text-gray-100 transition-colors duration-200;
-}
 
 .hero-letter {
   display: inline-block;
@@ -57,4 +52,8 @@ body {
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+body {
+  @apply bg-surface text-gray-800 dark:bg-surface-dark dark:text-gray-100 transition-colors duration-200;
 }

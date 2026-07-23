@@ -11,10 +11,11 @@ export interface Project {
   _id: string;
   title: string;
   slug: string;
-  coverImage?: SanityImage;
+  coverImage?: string;
   liveUrl?: string;
   repoUrl?: string;
   role: Role;
+  focusArea?: string;
   techStack: string[];
   summary: string;
   order: number;
