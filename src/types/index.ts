@@ -36,7 +36,7 @@ export interface Experience {
   roles: Role[];
   startDate: string;
   endDate?: string;
-  description: string;
+  description?: string;
   techStack: string[];
 }
 

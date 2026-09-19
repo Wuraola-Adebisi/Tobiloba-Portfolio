@@ -28,23 +28,30 @@ function ExperienceRow({
     <div
       ref={ref}
       style={{ animationDelay: inView ? `${delay}ms` : undefined }}
-      className={`flex items-baseline justify-between gap-4 flex-wrap py-5 scroll-reveal ${inView ? "in-view" : ""} ${
+      className={`py-6 scroll-reveal ${inView ? "in-view" : ""} ${
         isLast ? "" : "border-b border-border-light dark:border-border-dark"
       }`}
     >
-      <div>
-        <h3 className="font-heading text-base font-semibold tracking-tight text-gray-900 dark:text-white">
-          {entry.company}
-        </h3>
-        {entry.title && (
-          <p className="mt-0.5 text-sm text-gray-600 dark:text-gray-400">
-            {entry.title}
-          </p>
-        )}
+      <div className="flex items-baseline justify-between gap-4 flex-wrap">
+        <div>
+          <h3 className="font-heading text-base font-semibold tracking-tight text-gray-900 dark:text-white">
+            {entry.company}
+          </h3>
+          {entry.title && (
+            <p className="mt-0.5 text-sm text-gray-600 dark:text-gray-400">
+              {entry.title}
+            </p>
+          )}
+        </div>
+        <span className="font-mono text-[11px] text-gray-600 dark:text-gray-500 whitespace-nowrap">
+          {formatDate(entry.startDate)} – {formatDate(entry.endDate)}
+        </span>
       </div>
-      <span className="font-mono text-[11px] text-gray-600 dark:text-gray-500 whitespace-nowrap">
-        {formatDate(entry.startDate)} — {formatDate(entry.endDate)}
-      </span>
+      {entry.description && (
+        <p className="mt-4 max-w-[60ch] text-base leading-relaxed text-gray-600 dark:text-gray-400 whitespace-pre-line">
+          {entry.description}
+        </p>
+      )}
     </div>
   );
 }
